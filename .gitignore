@@ -1,0 +1,19 @@
+# scala specifics
+**/target
+*.class
+*.log
+.bsp/
+project/.bloop/
+build.sbt
+**/src/main/resources
+
+# intellij idea specifics
+.idea/
+*.iml
+
+# vcode idea specifics
+.dotty-ide.json
+.dotty-ide-artifact
+
+# mac os x specifics
+.DS_store
