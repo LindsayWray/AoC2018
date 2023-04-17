@@ -37,6 +37,7 @@ object Day04 extends App:
 
   var current_guard = 0
   var start_sleep = 0
+
   val naps = lines.flatMap(l => extractLines(l))
   val grouped_naps = naps.groupBy(n => n.ID)
 
@@ -67,33 +68,18 @@ object Day04 extends App:
   // loop over grouped naps, put a minutes array (0-60) together for every guard. So this results in a list/map
   // of minutes arrays. Get a list of each max, and the max of those maxes
 
-  var guards_sleep_per_minute : Map[Int, Array[Int]] = Map.empty
-  grouped_naps.foreach(gn => {
-    var minutes = new Array[Int](60)
+  val guards_sleep_per_minute = grouped_naps.map(gn => {
+    val minutes = new Array[Int](60)
     gn._2.foreach(n => {
       for (i <- minutes.indices) {
         if (i >= n.start_sleep && i < n.start_sleep + n.sleep_duration) minutes(i) += 1
       }
     })
-    guards_sleep_per_minute += (gn._1 -> minutes)
+    (gn._1, minutes)
   })
 
-  var most_minutes = 0
-  guards_sleep_per_minute.foreach(g => {
-    if (most_minutes < g._2.max){
-      most_minutes = g._2.max
-      current_guard = g._1
-    }
-  })
-
-  println("most_minutes " + most_minutes)
-  println("current_guard " + current_guard)
-
-  most_slept_minute = 0
-  for (i <- guards_sleep_per_minute(current_guard).indices) {
-    if (guards_sleep_per_minute(current_guard)(i) == most_minutes) most_slept_minute = i
-  }
-  println("most_slept_minute " + most_slept_minute)
+  current_guard = guards_sleep_per_minute.maxBy(g => g._2.max)._1
+  most_slept_minute = guards_sleep_per_minute(current_guard).zipWithIndex.maxBy(p => p._1)._2
 
   val answer2: Int = current_guard * most_slept_minute
   println(s"Answer day $day part 2: ${answer2} [${System.currentTimeMillis - start4}ms]")
