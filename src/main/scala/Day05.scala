@@ -3,11 +3,8 @@ import scala.io.*
 
 object Day05 extends App:
 
-  private val day: String =
-    this.getClass.getName.drop(3).init
-
-  private val start1: Long =
-    System.currentTimeMillis
+  val day: String = this.getClass.getName.drop(3).init
+  val start1: Long = System.currentTimeMillis
 
   private val polymer: String =
     Source
@@ -38,13 +35,12 @@ object Day05 extends App:
 
 
   // Part 2
-  private val start2: Long =
-    System.currentTimeMillis
+  private val start2: Long = System.currentTimeMillis
 
   val answer2 = ('a' to 'z').map(c => {
     reduceString(polymer.filterNot(letter => letter.toLower == c)).length
   }).min
 
-  println(s"Answer day $day part 1: ${answer2} [${System.currentTimeMillis - start2}ms]")
+  println(s"Answer day $day part 2: ${answer2} [${System.currentTimeMillis - start2}ms]")
 
 

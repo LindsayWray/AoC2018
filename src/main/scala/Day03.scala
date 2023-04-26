@@ -6,13 +6,10 @@ object Day03 extends App:
 
   case class claim (ID : Int, left : Int, top : Int, width : Int, height : Int)
 
-  private val day: String =
-    this.getClass.getName.drop(3).init
+  val day: String = this.getClass.getName.drop(3).init
+  val start1: Long = System.currentTimeMillis
 
-  private val start3: Long =
-    System.currentTimeMillis
-
-  private val lines: Vector[String] =
+  val lines: Vector[String] =
     Source
       .fromResource(s"input$day.txt")
       .getLines
@@ -28,7 +25,7 @@ object Day03 extends App:
   }
 
   val claims = lines.map(l => extractLines(l))
-
+  
   val width = claims.map(c => c.left + c.width).max
   val height = claims.map(c => c.top + c.height).max
 
@@ -46,10 +43,11 @@ object Day03 extends App:
     }
   }
 
-  println(s"Answer day $day part 1: ${total} [${System.currentTimeMillis - start3}ms]")
+  println(s"Answer day $day part 1: ${total} [${System.currentTimeMillis - start1}ms]")
 
 
 // PART 2
+  val start2: Long = System.currentTimeMillis
   def findOverlap(cl : claim, cr : claim) : Boolean = {
     if(cl.ID == cr.ID) false
     else if(cl.left + cl.width < cr.left || cr.left + cr.width < cl.left) false
@@ -62,6 +60,6 @@ object Day03 extends App:
     if (claims.forall(cr => !findOverlap(cl, cr))) uniqueClaim = cl.ID
   })
 
-  println(s"Answer day $day part 1: ${uniqueClaim} [${System.currentTimeMillis - start3}ms]")
+  println(s"Answer day $day part 2: ${uniqueClaim} [${System.currentTimeMillis - start2}ms]")
 
 

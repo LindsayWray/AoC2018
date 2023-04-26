@@ -2,11 +2,9 @@ import scala.io.*
 
 object Day04 extends App:
 
-  private val day: String =
-    this.getClass.getName.drop(3).init
-
-  private val start4: Long =
-    System.currentTimeMillis
+  val day: String = this.getClass.getName.drop(3).init
+  val start1: Long = System.currentTimeMillis
+  val start2: Long = System.currentTimeMillis
 
   private val lines: List[String] =
     Source
@@ -52,16 +50,14 @@ object Day04 extends App:
       if(i >= n.start_sleep && i < n.start_sleep + n.sleep_duration) minutes(i) += 1
     }
   })
-
-//  minutes.zipWithIndex.toMap
-//  var most_slept_minute = minutes.find(minutes.max)
+  
   var most_slept_minute = 0
   for (i <- minutes.indices) {
     if(minutes(i) == minutes.max) most_slept_minute = i
   }
 
   val answer1: Int = sleepiest_guard.ID * most_slept_minute
-  println(s"Answer day $day part 1: ${answer1} [${System.currentTimeMillis - start4}ms]")
+  println(s"Answer day $day part 1: ${answer1} [${System.currentTimeMillis - start1}ms]")
 
 
   // PART 2
@@ -82,6 +78,6 @@ object Day04 extends App:
   most_slept_minute = guards_sleep_per_minute(current_guard).zipWithIndex.maxBy(p => p._1)._2
 
   val answer2: Int = current_guard * most_slept_minute
-  println(s"Answer day $day part 2: ${answer2} [${System.currentTimeMillis - start4}ms]")
+  println(s"Answer day $day part 2: ${answer2} [${System.currentTimeMillis - start2}ms]")
 
 

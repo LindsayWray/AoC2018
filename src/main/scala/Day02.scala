@@ -4,11 +4,8 @@ case class ID (var two : Boolean, var three : Boolean)
 
 object Day02 extends App:
 
-  private val day: String =
-    this.getClass.getName.drop(3).init
-
-  private val start2: Long =
-    System.currentTimeMillis
+  val day: String = this.getClass.getName.drop(3).init
+  val start1: Long = System.currentTimeMillis
 
   val lines : List[String] =
     Source
@@ -42,11 +39,11 @@ object Day02 extends App:
   })
 
   val answer1: Int = twos * threes
-  println(s"Answer day $day part 1: ${answer1} [${System.currentTimeMillis - start2}ms]")
-
-
+  println(s"Answer day $day part 1: ${answer1} [${System.currentTimeMillis - start1}ms]")
+  
 
   // PART 2
+  private val start2: Long = System.currentTimeMillis
   def strCompare(l : String, r : String) : Boolean= {
     var ret : Boolean = true
     var diff : Boolean = false
@@ -74,8 +71,7 @@ object Day02 extends App:
       }
       case Nil => None
   }
-
-
+  
   val pair = findMatch(lines)
   var answer2 : String = ""
 
