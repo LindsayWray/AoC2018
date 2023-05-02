@@ -6,7 +6,6 @@ object Day07 extends App:
     this.getClass.getName.drop(3).init
 
   val start1: Long = System.currentTimeMillis
-  val start2: Long = System.currentTimeMillis
 
   private val rules: List[Rule] =
     Source
@@ -35,7 +34,7 @@ object Day07 extends App:
   println(s"Answer day $day part 1: ${answer1.mkString} [${System.currentTimeMillis - start1}ms]")
 
 // PART 2
-
+  val start2: Long = System.currentTimeMillis
   case class Worker(time: Int, letter: Char)
 
   def setOrder2(r: List[Rule], s: Set[Char]): Int = {
