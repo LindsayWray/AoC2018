@@ -18,30 +18,20 @@ object Day07 extends App:
       }
 
   case class Rule(before: Char, after: Char)
+  val letterSet = rules.foldLeft(Set.empty[Char]){ case (acc, r) => acc + r.before + r.after }
 
-  def createLetterSet(r: List[Rule]): Set[Char] = {
-    def go(r: List[Rule], s: Set[Char])(f: Rule => Char) : Set[Char] = {
-      r match
-        case Nil => s
-        case h :: t => go(t, s + f(h))(f)
-    }
-    go(r, go(r, Set.empty)(e => e.before))(e => e.after)
-  }
-
-  val letterSet = createLetterSet(rules)
-
-  def setOrder(r: List[Rule], s: Set[Char]): List[Char] = {
-    def go(r: List[Rule], s: Set[Char], order: List[Char]): List[Char] = {
+  def setOrder(r: List[Rule], s: Set[Char]): Vector[Char] = {
+    def go(r: List[Rule], s: Set[Char], order: Vector[Char]): Vector[Char] = {
       if(s.isEmpty) order
       else {
         val available = s.filterNot(ss => r.map(_.after).contains(ss)).min
-        go(r.filterNot(e => e.before == available), s - available, available :: order)
+        go(r.filterNot(e => e.before == available), s - available, order :+ available)
       }
     }
-    go(r, s, Nil: List[Char])
+    go(r, s, Vector.empty)
   }
 
-  val answer1 = setOrder(rules, letterSet).reverse
+  val answer1 = setOrder(rules, letterSet)
   println(s"Answer day $day part 1: ${answer1.mkString} [${System.currentTimeMillis - start1}ms]")
 
 // PART 2
