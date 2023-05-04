@@ -4,7 +4,6 @@
 *.log
 .bsp/
 project/.bloop/
-build.sbt
 **/src/main/resources
 
 # intellij idea specifics

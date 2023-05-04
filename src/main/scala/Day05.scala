@@ -10,12 +10,10 @@ object Day05 extends App:
     Source
       .fromResource(s"input$day.txt")
       .getLines
-      .next
+      .mkString
 
   def reduceString(str: String): String = {
-    @tailrec
     def go(s: String, prefix : String = ""): String = {
-      @tailrec
       def go2(i : Int) : Option[Int] = {
         if(i >= s.length - 1) None
         else if (s(i) == s(i + 1) + 32 || s(i) == s(i + 1) - 32) Some(i) // ascii difference between upper/lower
@@ -42,5 +40,6 @@ object Day05 extends App:
   }).min
 
   println(s"Answer day $day part 2: ${answer2} [${System.currentTimeMillis - start2}ms]")
+
 
 

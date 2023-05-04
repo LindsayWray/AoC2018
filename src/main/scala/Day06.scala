@@ -3,7 +3,7 @@ object Day06 extends App:
 
   val day: String = this.getClass.getName.drop(3).init
   val start1: Long = System.currentTimeMillis
-  case class Location(x: Int, y: Int)
+
 
   private val locations: List[Location] =
     Source
@@ -14,6 +14,7 @@ object Day06 extends App:
         case s"${x}, ${y}" => Location(x.toInt, y.toInt)
       }
 
+  case class Location(x: Int, y: Int)
   def findNearest(loc: List[Location], x: Int, y: Int) : Option[Location] = {
     val distances = loc.map(l => math.abs(x - l.x) + math.abs(y - l.y)).zip(loc)
     val nearest = distances.minBy(e => e._1)
@@ -41,8 +42,7 @@ object Day06 extends App:
 
 
   // *** Part 2 ***
-  private val start2: Long = System.currentTimeMillis
-
+  val start2: Long = System.currentTimeMillis
   def partOfRegion(loc: List[Location], x: Int, y: Int): Int = {
     loc.map(l => math.abs(x - l.x) + math.abs(y - l.y)).sum
   }
@@ -51,3 +51,4 @@ object Day06 extends App:
   val answer2: Int = total_distances.count(e => e < 10000)
 
   println(s"Answer day $day part 2: ${answer2} [${System.currentTimeMillis - start2}ms]")
+
