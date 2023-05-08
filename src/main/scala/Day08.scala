@@ -1,5 +1,3 @@
-import Day08.Node
-
 import scala.io.*
 
 object Day08 extends App:
@@ -16,7 +14,23 @@ object Day08 extends App:
       .map(s => s.toInt)
       .toVector
 
-  case class Node(children: List[Node], meta: Vector[Int], end: Int)
+  case class Node(children: List[Node], meta: Vector[Int], end: Int) {
+    def countMetaValues: Int = {
+      meta.sum + children.map(_.countMetaValues).sum
+    }
+
+    // PART 2
+    def countNodeValue: Int = {
+      if (children.isEmpty) meta.sum
+      else {
+        meta.map(m => {
+          if (m <= children.size) children(m - 1).countNodeValue
+          else 0
+        }).sum
+      }
+    }
+  }
+
   def getNode(idx: Int): Node = {
     val children_amount = input(idx)
     val values = input(idx + 1)
@@ -41,28 +55,10 @@ object Day08 extends App:
   }
 
   val root = getNode(0)
-  def countMetaValues(node: Node): Int = {
-    node.meta.sum + node.children.map(countMetaValues).sum
-  }
 
-  val answer1: Int = countMetaValues(root)
+  val answer1: Int = root.countMetaValues
   println(s"Answer day $day part 1: ${answer1} [${System.currentTimeMillis - start1}ms]")
 
-
-  // PART 2
-  def countNodeValue(node: Node): Int = {
-    if(node.children.isEmpty) node.meta.sum
-    else {
-      node.meta.map(m => {
-        if(m <= node.children.size) countNodeValue(node.children(m - 1))
-        else 0
-      }).sum
-    }
-  }
-
-  val answer2: Int = countNodeValue(root)
-  println(s"Answer day $day part 2: ${answer2} [${System.currentTimeMillis - start1}ms]")
-
-
-
-
+  val start2: Long = System.currentTimeMillis
+  val answer2: Int = root.countNodeValue
+  println(s"Answer day $day part 2: ${answer2} [${System.currentTimeMillis - start2}ms]")
