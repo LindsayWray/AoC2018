@@ -44,16 +44,16 @@ object Day09 extends App:
       front.head
     }
   }
-
-  def placeMarble(final_marble : Int = data.marbles): List[Player] = {
-    def go(marble: Int, player: Int, marble_seq: MarbleSeq, players: List[Player]): List[Player] = {
-      if(marble == final_marble + 1) return players
+  
+  def placeMarble(finalMarble : Int = data.marbles): List[Player] = {
+    def go(marble: Int, player: Int, marbleSeq: MarbleSeq, players: List[Player]): List[Player] = {
+      if(marble == finalMarble + 1) return players
 
       val nextPlayer : Int = if player < data.players then player + 1 else 1
       if(marble % 23 != 0){
-        go(marble + 1, nextPlayer, marble_seq.shiftRight(1).insert(marble), players)
+        go(marble + 1, nextPlayer, marbleSeq.shiftRight(1).insert(marble), players)
       } else {
-        val newMarbleSeq : MarbleSeq = marble_seq.shiftLeft(7)
+        val newMarbleSeq : MarbleSeq = marbleSeq.shiftLeft(7)
         val points : Int = newMarbleSeq.getValue + marble
         go(marble + 1, nextPlayer, newMarbleSeq.remove, players.prepended(Player(player, points)))
       }
