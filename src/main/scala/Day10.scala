@@ -6,7 +6,9 @@ object Day10 extends App:
   val start2: Long = System.currentTimeMillis
 
   case class Star(pos: Coord, move: Coord)
-  case class Coord(x: Int, y: Int)
+  case class Coord(x: Int, y: Int) {
+    def +(that: Coord): Coord = Coord(this.x + that.x, this.y + that.y)
+  }
 
   private val stars: List[Star] =
     Source
@@ -19,7 +21,7 @@ object Day10 extends App:
       }
 
   def moveStars(stars: List[Star], seconds: Int, height: Int): Unit = {
-    val movedStars: List[Star] = stars.map(s => Star(Coord(s.pos.x + s.move.x, s.pos.y + s.move.y), s.move))
+    val movedStars: List[Star] = stars.map(s => Star(s.pos + s.move, s.move))
     val heightDifference: Int = math.abs(movedStars.map(_.pos.y).min - movedStars.map(_.pos.y).max)
     if (heightDifference > height)
       printStarGrid(stars, seconds)
@@ -29,10 +31,10 @@ object Day10 extends App:
   moveStars(stars, 0, Int.MaxValue)
 
   def printStarGrid(stars : List[Star], seconds: Int) = {
-    val yMin: Int = stars.map(_.pos.y).min
-    val yMax: Int = stars.map(_.pos.y).max
-    val xMin: Int = stars.map(_.pos.x).min
-    val xMax: Int = stars.map(_.pos.x).max
+    val yMin: Int = stars.minBy(_.pos.y).pos.y
+    val yMax: Int = stars.maxBy(_.pos.y).pos.y
+    val xMin: Int = stars.minBy(_.pos.x).pos.x
+    val xMax: Int = stars.maxBy(_.pos.x).pos.x
 
     println(s"Answer day $day part 1: ")
     for {
