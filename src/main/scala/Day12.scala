@@ -14,9 +14,7 @@ object Day12 extends App:
   val patterns: Map[String, Char] = lines.drop(2).map(e => e.substring(0, 5) -> e.last).toMap
 
   def plantsOverGenerations(gen: Int, plantState: String, leftPlants: Int): (Int, Int) = {
-    val newState: String = plantState.sliding(5).map(s => {
-      patterns(s)
-    }).mkString
+    val newState: String = plantState.sliding(5).map(patterns).mkString
 
     if (gen > 0) {
       plantsOverGenerations(gen - 1, "..." + newState + "...", leftPlants + 1)
